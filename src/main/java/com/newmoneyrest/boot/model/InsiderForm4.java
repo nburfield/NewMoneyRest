@@ -1,25 +1,31 @@
 package com.newmoneyrest.boot.model;
 
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(name = "form_4s")
-public class Form4 {
-	public Form4() {}
+@IdClass(InsiderForm4Id.class)
+@Table(name = "insider_form_4")
+public class InsiderForm4 implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public InsiderForm4() {}
 	
-	public Form4(String form4Header, Insider insider, Company company, Boolean isDirector, Boolean isOfficer,
-			Boolean isTenPercent, Boolean isOther, String officerTitle) {
+	public InsiderForm4(String headerForm4Id, Insider insider, Company company, Boolean isDirector, Boolean isOfficer,
+			Boolean isTenPercent, Boolean isOther, String officerTitle, String date) {
 		super();
-		this.form4Header = form4Header;
+		this.headerForm4Id = headerForm4Id;
 		this.insider = insider;
 		this.company = company;
 		this.isDirector = isDirector;
@@ -27,16 +33,18 @@ public class Form4 {
 		this.isTenPercent = isTenPercent;
 		this.isOther = isOther;
 		this.officerTitle = officerTitle;
+		this.date = date;
 	}
 
 	@Id
-	@Column(length = 255)
-	private String form4Header;
+	@Column(name = "header_form_4_id", length = 255)
+	private String headerForm4Id;
 	
+	@Id
 	@ManyToOne
     @JoinColumn(name = "insider_id")
 	private Insider insider;
-
+	
 	@ManyToOne
     @JoinColumn(name = "company_id")
 	private Company company;
@@ -49,50 +57,49 @@ public class Form4 {
 	@Column(length = 30)
 	private String officerTitle;
 	
-	@OneToMany(mappedBy = "form4", cascade = CascadeType.ALL)
-	Set<Nonderivative> nonderivative;
-	
-	@OneToMany(mappedBy = "form4", cascade = CascadeType.ALL)
-	Set<Derivative> derivative;
-	
-	public Set<Nonderivative> getNonderivative() {
-		return nonderivative;
+	@Column(length = 255)
+	private String date;
+
+	public String getHeaderForm4Id() {
+		return headerForm4Id;
 	}
 
-	public void setNonderivative(Set<Nonderivative> nonderivative) {
-		this.nonderivative = nonderivative;
+	public void setHeaderForm4Id(String headerForm4Id) {
+		this.headerForm4Id = headerForm4Id;
 	}
 
-	public Set<Derivative> getDerivative() {
-		return derivative;
-	}
-
-	public void setDerivative(Set<Derivative> derivative) {
-		this.derivative = derivative;
-	}
-
-	public String getForm4Header() {
-		return form4Header;
-	}
-
-	public void setForm4Header(String form4Header) {
-		this.form4Header = form4Header;
-	}
-
-	public Insider getInsider() {
-		return insider;
-	}
-
-	public void setInsider(Insider insider) {
-		this.insider = insider;
-	}
-
+	@JsonBackReference
 	public Company getCompany() {
 		return company;
 	}
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getHeaderForm4() {
+		return headerForm4Id;
+	}
+
+	public void setHeaderForm4(String headerForm4Id) {
+		this.headerForm4Id = headerForm4Id;
+	}
+
+	@JsonBackReference
+	public Insider getInsider() {
+		return insider;
+	}
+
+	public void setInsider(Insider insider) {
+		this.insider = insider;
 	}
 
 	public Boolean getIsDirector() {

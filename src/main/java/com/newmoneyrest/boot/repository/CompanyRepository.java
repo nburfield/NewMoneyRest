@@ -9,5 +9,6 @@ import com.newmoneyrest.boot.model.Company;
 public interface CompanyRepository extends CrudRepository<Company, Long> {
 	public Company findByName(String name);
 	public Company findByTicker(String ticker);
+	public Company findByCik(String cik);
 	public ArrayList<Company> findAll();
 }

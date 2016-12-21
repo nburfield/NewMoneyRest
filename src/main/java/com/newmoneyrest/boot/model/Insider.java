@@ -9,10 +9,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "insiders")
 public class Insider {
 	
+	public Insider() {}
+	
+	public Insider(String cik, String name, String street1, String street2, String city, String state, String zip,
+			String stateDescription) {
+		super();
+		this.cik = cik;
+		this.name = name;
+		this.street1 = street1;
+		this.street2 = street2;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.stateDescription = stateDescription;
+	}
+
 	@Id
 	@Column(length = 30, nullable = false)
 	private String cik;
@@ -39,14 +56,15 @@ public class Insider {
 	private String stateDescription;
 	
 	@OneToMany(mappedBy = "insider", cascade = CascadeType.ALL)
-	Set<Form4> form4;
+	Set<InsiderForm4> insiderForm4;
 
-	public Set<Form4> getForm4() {
-		return form4;
+	@JsonManagedReference
+	public Set<InsiderForm4> getForm4() {
+		return insiderForm4;
 	}
 
-	public void setForm4(Set<Form4> form4) {
-		this.form4 = form4;
+	public void setForm4(Set<InsiderForm4> insiderForm4) {
+		this.insiderForm4 = insiderForm4;
 	}
 
 	public String getCik() {

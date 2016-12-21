@@ -67,15 +67,15 @@ public class Company {
 	Set<HistoricalDatum> historicalData;
 	
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-	Set<Form4> form4;
+	Set<InsiderForm4> insiderForm4;
 
 	@JsonManagedReference
-	public Set<Form4> getForm4() {
-		return form4;
+	public Set<InsiderForm4> getInsiderForm4() {
+		return insiderForm4;
 	}
 
-	public void setForm4(Set<Form4> form4) {
-		this.form4 = form4;
+	public void setInsiderForm4(Set<InsiderForm4> insiderForm4) {
+		this.insiderForm4 = insiderForm4;
 	}
 
 	@JsonManagedReference

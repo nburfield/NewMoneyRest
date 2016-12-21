@@ -5,12 +5,12 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.IdClass;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(NonderivativeId.class)
 @Table(name = "nonderivative")
 public class Nonderivative implements Serializable {
 
@@ -20,9 +20,8 @@ public class Nonderivative implements Serializable {
 	private long nonderivativeId;
 	
 	@Id
-	@ManyToOne
-    @JoinColumn(name = "form_4_id")
-	private Form4 form4;
+	@Column(length = 255, name = "header_form_4_id")
+	private String headerForm4Id;
 	
 	@Column(length = 255)
 	private String securityTitle;
@@ -91,12 +90,12 @@ public class Nonderivative implements Serializable {
 		this.nonderivativeId = derivativeId;
 	}
 
-	public Form4 getForm4() {
-		return form4;
+	public String getForm4() {
+		return headerForm4Id;
 	}
 
-	public void setForm4(Form4 form4) {
-		this.form4 = form4;
+	public void setForm4(String headerForm4Id) {
+		this.headerForm4Id = headerForm4Id;
 	}
 
 	public String getSecurityTitle() {
